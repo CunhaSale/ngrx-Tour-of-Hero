@@ -1,0 +1,13 @@
+.col-sm-auto {
+  padding: 20px;
+  text-align: center;
+  color: #eee;
+  background-color: #607d8b;
+  border-radius: 2px;
+  margin-right: 7px; margin-bottom: 7px;
+}
+.col-sm-auto:hover {
+  background-color: #eee;
+  cursor: pointer;
+  color: #607d8b;
+}

@@ -1,0 +1,20 @@
+/* HeroesComponent's private CSS styles */
+.list-group{
+  width: 300px;
+  margin: 0 auto;
+}
+.selected {
+  background-color: rgb(250, 244, 235) !important;
+  color: #607D8B;
+}
+.list-group-item {
+  cursor: pointer;
+}
+.list-group-item.selected:hover {
+  background-color: #BBD8DC !important;
+  color: white;
+}
+.list-group-item:hover {
+  color: #607D8B;
+  background-color: #DDD;
+}

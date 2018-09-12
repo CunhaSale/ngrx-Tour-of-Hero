@@ -1,0 +1,24 @@
+/* HeroSearch private styles */
+.search-result li {
+    margin: 10px;
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.search-result li a {
+    color: #888;
+    display: block;
+    text-decoration: none;
+}
+
+.search-result li a:hover {
+    color: #607D8B;
+}
+.search-result li a:active {
+    color: #607D8B;
+}
+
+ul.search-result {
+    margin-top: 0;
+    padding-left: 0;
+}

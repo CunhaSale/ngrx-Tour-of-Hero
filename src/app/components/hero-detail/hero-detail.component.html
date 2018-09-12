@@ -1,0 +1,13 @@
+<div style="width: 350px; margin: 0 auto;">
+  <button style="border: 0;" (click)="goBack()" class="btn btn-outline-danger"><i class="fa fa-angle-left"></i> Go back</button>
+</div>
+<div *ngIf="hero" style="text-align: center;">
+  <h2>{{hero.name | uppercase}} Details</h2>
+  <div class="container-centered">
+    <span>id: </span>{{hero.id}}
+    <label>name:
+      <input [(ngModel)]="hero.name" placeholder="name">
+    </label>
+    <button class="btn btn-success" (click)="save()">Save</button>
+  </div>
+</div>

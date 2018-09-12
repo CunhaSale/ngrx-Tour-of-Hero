@@ -1,0 +1,17 @@
+<h2 style="text-align: center;">My Heroes</h2>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item" *ngFor="let hero of heroes">
+    <a routerLink="/detail/{{hero.id}}">
+      <span>{{hero.id}} - </span> {{hero.name}}
+    </a>
+    <button class="btn btn-danger" style="float: right;" (click)="delete(hero)">
+      <i class="fa fa-trash"></i>
+    </button>
+  </li>
+</ul>
+<div style="width: 300px; margin: 0 auto; padding-left: 15px;">
+  <label>Hero name: 
+    <input class="form-control" type="text" #heroName>
+  </label>
+  <button class="btn btn-primary" (click)="add(heroName.value); heroName.value=''">Add</button>
+</div>

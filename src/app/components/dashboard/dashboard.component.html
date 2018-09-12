@@ -1,0 +1,9 @@
+<h2 style="text-align: center;">Top Heroes</h2>
+<div class="row justify-content-sm-center">
+    <a *ngFor="let hero of heroes" class="col-sm-auto" routerLink="/detail/{{hero.id}}">
+      <div>
+        {{ hero.name }}
+      </div>
+    </a>
+</div>
+<app-hero-search></app-hero-search>
