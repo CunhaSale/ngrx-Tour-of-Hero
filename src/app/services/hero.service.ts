@@ -9,7 +9,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class HeroService {
-  private url = 'api/heroes';
+  private url = 'http://localhost:3001/api';
   private httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   }
@@ -31,7 +31,7 @@ export class HeroService {
 
   getHeroes(): Observable<Hero[]>{
     //this.messageService.add('Fetched heroes')
-    return this.http.get<Hero[]>(this.url)
+    return this.http.get<Hero[]>(`${this.url}/hero`)
       .pipe(
         tap(heroes => this.log('fetched heroes')),
         catchError(this.handleError('getHeroes', []))
@@ -41,7 +41,7 @@ export class HeroService {
   getHero(id: number): Observable<Hero>{
     //this.messageService.add(`Hero Service: Fetched hero id=${id}`);
     //return of(HEROES.find(hero => hero.id === id));
-    return this.http.get<Hero>(`${this.url}/${id}`)
+    return this.http.get<Hero>(`${this.url}/hero/${id}`)
       .pipe(
         tap(_ => this.log(`fetched hero id=${id}`)),
         catchError(this.handleError<Hero>(`getHero id=${id}`))
@@ -49,7 +49,7 @@ export class HeroService {
   }
 
   updateHero(hero: Hero): Observable<any>{
-    return this.http.put(this.url, hero, this.httpOptions)
+    return this.http.put(`${this.url}/hero/${hero._id}`, hero, this.httpOptions)
       .pipe(
         tap(_ => this.log(`Updated hero id=${hero.id}`)),
         catchError(this.handleError<any>('updateHero'))
@@ -57,7 +57,7 @@ export class HeroService {
   }
 
   addHero(hero: Hero): Observable<Hero>{
-    return this.http.post<Hero>(this.url, hero, this.httpOptions)
+    return this.http.post<Hero>(`${this.url}/hero`, hero, this.httpOptions)
       .pipe(
         tap((hero: Hero) => this.log(`Added hero w/ id=${hero.id}`)),
         catchError(this.handleError<Hero>('addHero'))
@@ -65,8 +65,8 @@ export class HeroService {
   }
 
   deleteHero(hero: Hero | number): Observable<Hero>{
-    const id = typeof hero === 'number'? hero: hero.id;
-    return this.http.delete<Hero>(`${this.url}/${id}`, this.httpOptions)
+    const id = typeof hero === 'number'? hero: hero._id;
+    return this.http.delete<Hero>(`${this.url}/hero/${id}`, this.httpOptions)
       .pipe(
         tap(_ => this.log(`Deleted hero id=${id}`)),
         catchError(this.handleError<Hero>('deleteHero'))
