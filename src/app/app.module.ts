@@ -9,13 +9,20 @@ import { HeroesComponent } from './components/heroes/heroes.component';
 import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HeroSearchComponent } from './components/hero-search/hero-search.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { LogInComponent } from './components/log-in/log-in.component';
 
 import { HeroService } from './services/hero.service';
 import { MessageService } from './services/message.service';
+import { AuthService } from './services/auth.service';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './services/in-memory-data.service';
-import { HeroSearchComponent } from './components/hero-search/hero-search.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/auth.effects';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store/app.states';
 
 @NgModule({
   declarations: [
@@ -24,24 +31,28 @@ import { HeroSearchComponent } from './components/hero-search/hero-search.compon
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    HeroSearchComponent
+    HeroSearchComponent,
+    SignUpComponent,
+    LogInComponent,
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([AuthEffects]),
     RouterModule.forRoot([
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-      { path: 'dashboard', component: DashboardComponent},
+      { path: '', component: DashboardComponent},
+      { path: 'log-in', component: LogInComponent},
+      { path: 'sign-up', component: SignUpComponent},
       { path: 'heroes', component: HeroesComponent},
       { path: 'detail/:id', component: HeroDetailComponent},
-      { path: '**', redirectTo: '/dashboard'},
+      { path: '**', redirectTo: '/'},
     ]),
-    HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false}
-    )
+    HttpClientModule
   ],
-  providers: [HeroService, MessageService],
+  providers: [HeroService, MessageService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

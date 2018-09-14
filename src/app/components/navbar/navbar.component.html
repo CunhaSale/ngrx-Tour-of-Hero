@@ -1,0 +1,6 @@
+<nav class="nav">
+  <a *ngIf="isAuthenticated == false" class="nav-link" routerLink="/log-in">Login</a>
+  <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+  <a class="nav-link" routerLink="/heroes">Heroes</a>
+  <a *ngIf="isAuthenticated == true" (click)="logOut()" class="nav-link" routerLink="/log-in">Logout</a>
+</nav>
