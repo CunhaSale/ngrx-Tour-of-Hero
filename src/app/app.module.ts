@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS }    from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './components/heroes/heroes.component';
@@ -16,6 +16,8 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { HeroService } from './services/hero.service';
 import { MessageService } from './services/message.service';
 import { AuthService } from './services/auth.service';
+import { TokenInterceptor, ErrorInterceptor } from './services/token.service';
+import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -46,13 +48,22 @@ import { reducers } from './store/app.states';
       { path: '', component: DashboardComponent},
       { path: 'log-in', component: LogInComponent},
       { path: 'sign-up', component: SignUpComponent},
-      { path: 'heroes', component: HeroesComponent},
-      { path: 'detail/:id', component: HeroDetailComponent},
+      { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]},
+      { path: 'detail/:id', component: HeroDetailComponent, canActivate: [AuthGuard]},
       { path: '**', redirectTo: '/'},
     ]),
     HttpClientModule
   ],
-  providers: [HeroService, MessageService, AuthService],
+  providers: [HeroService, MessageService, AuthService, AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
